@@ -1,10 +1,14 @@
+//modules and Globals
 require('dotenv').config()
 const express = require('express')
 const app = express()
 
+//Express settings
 app.set('view engine', 'jsx')
 app.engine('jsx', require('express-react-views').createEngine())
+app.use(express.static('public'))
 
+//controllers and routes
 app.use('/places', require('./controllers/places'))
 
 app.get('/', (req, res) => {
@@ -15,28 +19,7 @@ app.get('*', (req, res) => {
     res.render('error404')
 })
 
-let Places = [{
-  name: 'H-Thai-ML',
-  city: 'Seattle',
-  state: 'WA',
-  cuisines: 'Thai, Pan-Asian',
-  pic: 'http://placekitten.com/250/250'
-}, {
-  name: 'Coding Cat Cafe',
-  city: 'Phoenix',
-  state: 'AZ',
-  cuisines: 'Coffee, Bakery',
-  pic: 'http://placekitten.com/250/250'
-}]
-
-// GET /places
-app.get('/', (req, res) => {
-  
-  res.render('places/index', { Places })
-})
-
-
-
+//listen for connections
 app.listen(process.env.PORT)
 
 
