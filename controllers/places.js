@@ -16,10 +16,15 @@ let Places = [{
   pic: 'https://media-cdn.tripadvisor.com/media/photo-s/1a/a8/02/ba/dining-room.jpg'
 }]
 
+router.get('/new', (req, res) => {
+  res.render('places/new')
+})
+
 // GET /places
 router.get('/', (req, res) => {
   
   res.render('places/index', { Places })
 })
+
 
 module.exports = router
