@@ -15,6 +15,8 @@ function show (data) {
                     <h1 className="card-title">{data.place.name}</h1>
                     <h2 className="card-title">Rating</h2>
                     <p className="card-text">Not Rated</p>
+                    <h2 className="card-title">Cuisines</h2>
+                    <p className="card-text">{data.place.cuisines}</p>
                     <h2 className="card-title">Description</h2>
                     <p className="card-text">Located in {data.place.city}, {data.place.state} and serving delicious food</p>
                   </div>
