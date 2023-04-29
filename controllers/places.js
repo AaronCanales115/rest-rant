@@ -1,10 +1,19 @@
 const router = require('express').Router();
 const places = require('../models/places.js')
+const db = require('../models')
+
 
 // GET /places
 router.get('/', (req, res) => {
-  
-  res.render('places/index', { places })
+  //res.render('places/index', { places })
+  db.Place.find()
+    .then((places) => {
+      res.render('places/index', { places })
+    })
+    .catch(err => {
+      console.log(err) 
+      res.render('error404')
+    })
 })
 
 router.get('/new', (req, res) => {
@@ -12,7 +21,7 @@ router.get('/new', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-  let id = Number(req.params.id)
+  /*let id = Number(req.params.id)
   if (isNaN(id)) {
     res.render('error404')
   }
@@ -21,13 +30,21 @@ router.get('/:id', (req, res) => {
   }
   else {
     res.render('places/show', { place: places[id], id })
-  }
+  }*/
+  db.Place.findById(req.params.id)
+    .then(place => {
+        res.render('places/show', { place })
+    })
+    .catch(err => {
+        console.log('err', err)
+        res.render('error404')
+    })
 })
 
 
 
 router.post('/', (req, res) => {
-  console.log(req.body)
+  /*console.log(req.body)
   if (!req.body.pic) {
     // Default image if one is not provided
     req.body.pic = 'http://placekitten.com/400/400'
@@ -39,11 +56,19 @@ router.post('/', (req, res) => {
     req.body.state = 'USA'
   }
   places.push(req.body)
-  res.redirect('/places')
+  res.redirect('/places')*/
+  db.Place.create(req.body)
+  .then(() => {
+      res.redirect('/places')
+  })
+  .catch(err => {
+      console.log('err', err)
+      res.render('error404')
+  })
 })
 
 router.delete('/:id', (req, res) => {
-  let id = Number(req.params.id)
+  /*let id = Number(req.params.id)
   if (isNaN(id)) {
     res.render('error404')
   }
@@ -53,11 +78,11 @@ router.delete('/:id', (req, res) => {
   else {
     places.splice(id, 1)
     res.redirect('/places')
-  }
+  }*/
 })
 
 router.get('/:id/edit', (req, res) => {
-  let id = Number(req.params.id)
+  /*let id = Number(req.params.id)
   if (isNaN(id)) {
       res.render('error404')
   }
@@ -66,11 +91,11 @@ router.get('/:id/edit', (req, res) => {
   }
   else {
     res.render('places/edit', { place: places[id], id })
-  }
+  }*/
 })
 
 router.put('/:id', (req, res) => {
-  let id = Number(req.params.id)
+  /*let id = Number(req.params.id)
   if (isNaN(id)) {
       res.render('error404')
   }
@@ -93,7 +118,7 @@ router.put('/:id', (req, res) => {
       // Save the new data into places[id]
       places[id] = req.body
       res.redirect(`/places/${id}`)
-  }
+  }*/
 })
 
 module.exports = router

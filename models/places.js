@@ -1,4 +1,4 @@
-module.exports = [{
+/*module.exports = [{
     name: 'H-Thai-ML',
     city: 'Seattle',
     state: 'WA',
@@ -12,4 +12,17 @@ module.exports = [{
     cuisines: 'Coffee, Bakery',
     //pic: '/images/coffee-cat.jpg'
     pic: 'https://f.hubspotusercontent00.net/hubfs/6744703/nafinia-putra-Kwdp-0pok-I-unsplash.jpg'
-}]
+}]*/
+
+const mongoose = require('mongoose')
+
+const placeSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  pic: String,
+  cuisines: { type: String, required: true },
+  city: { type: String, default: 'Anytown' },
+  state: { type: String, default: 'USA' },
+  founded: Number
+})
+
+module.exports = mongoose.model('Place', placeSchema)
