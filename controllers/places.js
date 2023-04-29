@@ -58,13 +58,18 @@ router.post('/', (req, res) => {
   places.push(req.body)
   res.redirect('/places')*/
   db.Place.create(req.body)
-  .then(() => {
-      res.redirect('/places')
-  })
-  .catch(err => {
-      console.log('err', err)
-      res.render('error404')
-  })
+    .then(() => {
+        res.redirect('/places')
+    })
+    .catch(err => {
+      let message = 'Validation Error: '
+      for (var field in err.errors) {
+          message += `${field} was ${err.errors[field].value}. `
+          message += `${err.errors[field].message}`
+      }
+      console.log('Validation error message', message)
+      res.render('places/new', { message })
+    })
 })
 
 router.delete('/:id', (req, res) => {
