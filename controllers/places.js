@@ -21,25 +21,18 @@ router.get('/new', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-  /*let id = Number(req.params.id)
-  if (isNaN(id)) {
-    res.render('error404')
-  }
-  else if (!places[id]) {
-    res.render('error404')
-  }
-  else {
-    res.render('places/show', { place: places[id], id })
-  }*/
   db.Place.findById(req.params.id)
-    .then(place => {
-        res.render('places/show', { place })
-    })
-    .catch(err => {
-        console.log('err', err)
-        res.render('error404')
-    })
+  .populate('comments')
+  .then(place => {
+      console.log(place.comments)
+      res.render('places/show', { place })
+  })
+  .catch(err => {
+      console.log('err', err)
+      res.render('error404')
+  })
 })
+
 
 
 
