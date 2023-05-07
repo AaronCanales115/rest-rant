@@ -39,3 +39,15 @@ nav a:hover {
     text-decoration: none;
 }
 
+.commentsR{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.checkb{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
